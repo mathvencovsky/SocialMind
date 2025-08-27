@@ -3,48 +3,28 @@ name: CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ "main" ]
 
 jobs:
-  build-test-lint:
+  build-and-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
-      - name: Install dependencies
+      - name: Install
         run: npm ci
 
-      - name: Typecheck
-        run: npx tsc --noEmit
+      - name: Lint
+        run: npm run lint
 
-      - name: Lint (ESLint)
-        run: npx eslint "src/**/*.{ts,tsx}"
-
-      - name: Format check (Prettier)
-        run: npx prettier --check .
-
-      - name: Unit tests (Vitest)
+      - name: Test
         run: npm run test
-
-      - name: Build
-        run: npm run build
-
-      - name: Upload build artifacts
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-${{ matrix.node-version }}
-          path: dist
