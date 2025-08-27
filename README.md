@@ -1,5 +1,5 @@
 
-# 🌐 SocialMind
+# SocialMind
 
 ![Build](https://img.shields.io/github/actions/workflow/status/SEU-USUARIO/SocialMind/ci.yml?branch=main)
 ![Lint](https://img.shields.io/badge/lint-eslint-blue)
@@ -7,39 +7,39 @@
 ![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 
-> 🚀 Plataforma em desenvolvimento para **análise inteligente de perfis de redes sociais** (influenciadores e empresas), utilizando **IA e métricas avançadas** para oferecer insights de engajamento, campanhas e crescimento — inspirado em ferramentas como Modash.io.
+>  Plataforma em desenvolvimento para **análise inteligente de perfis de redes sociais** (influenciadores e empresas), utilizando **IA e métricas avançadas** para oferecer insights de engajamento, campanhas e crescimento — inspirado em ferramentas como Modash.io.
 
 ---
 
-## ✨ Funcionalidades (em andamento)
+## Funcionalidades (em andamento)
 
-- 📊 **Dashboard de Perfil**
+-  **Dashboard de Perfil**
   - Resumo de seguidores, engajamento médio (ER), visualizações e número de campanhas.
   - Comparação entre posts **orgânicos** e de **campanha**.
   - Gráfico de crescimento de seguidores com identificação de picos.
 
-- 🔍 **Comparação de Perfis**
+-  **Comparação de Perfis**
   - Compare até dois perfis semelhantes em métricas de:
     - Seguidores
     - Engajamento (ER)
     - Visualizações médias
     - Campanhas ativas
 
-- 📈 **Campanhas**
+-  **Campanhas**
   - Registro e visualização de campanhas executadas.
   - Análise de performance (likes, comentários, shares, ER).
 
-- 🧑‍🤝‍🧑 **Audiência**
+-  **Audiência**
   - Segmentação de seguidores (gênero, idade, localização).
   - Métricas de qualidade da audiência.
 
-- 📑 **Relatórios**
+-  **Relatórios**
   - Geração de relatórios comparativos entre **conteúdo orgânico** e **patrocinado**.
   - Import de CSV/JSON e exportação para PDF (em progresso).
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+##  Tecnologias Utilizadas
 
 - React 18 + Vite
 - TypeScript
@@ -52,7 +52,7 @@
 
 ---
 
-## 🚀 Como rodar localmente
+##  Como rodar localmente
 
 ```bash
 git clone https://github.com/SEU-USUARIO/SocialMind.git
@@ -64,7 +64,7 @@ npm run dev
 
 ---
 
-## 🧪 Scripts
+##  Scripts
 
 - `npm run dev` — desenvolvimento
 - `npm run build` — build produção
@@ -76,7 +76,7 @@ npm run dev
 
 ---
 
-## 📂 Estrutura
+##  Estrutura
 
 ```
 src/
@@ -92,7 +92,7 @@ src/
 
 ---
 
-## 📌 Roadmap
+##  Roadmap
 
 - [x] Protótipo com abas
 - [x] Comparador de perfis
@@ -104,7 +104,7 @@ src/
 
 ---
 
-## 🤝 Contribuindo
+##  Contribuindo
 
 1. Faça fork
 2. Crie sua branch: `git checkout -b feat/minha-feature`
@@ -116,6 +116,6 @@ src/
 
 ---
 
-## 📜 Licença
+##  Licença
 
 MIT © MVP
