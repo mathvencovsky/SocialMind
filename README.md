@@ -1,45 +1,45 @@
-
 # SocialMind
 
-![Build](https://img.shields.io/github/actions/workflow/status/SEU-USUARIO/SocialMind/ci.yml?branch=main)
+![Build](https://img.shields.io/github/actions/workflow/status/YOUR-USERNAME/SocialMind/ci.yml?branch=main)
 ![Lint](https://img.shields.io/badge/lint-eslint-blue)
 ![Tests](https://img.shields.io/badge/tests-vitest-green)
 ![Node](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 
->  Plataforma em desenvolvimento para **análise inteligente de perfis de redes sociais** (influenciadores e empresas), utilizando **IA e métricas avançadas** para oferecer insights de engajamento, campanhas e crescimento — inspirado em ferramentas como Modash.io.
+> SocialMind is a platform (in development) for **intelligent social media profile analysis** (influencers and brands).  
+> It uses **AI and advanced metrics** to deliver insights about engagement, campaigns, and growth — inspired by tools like Modash.io.
 
 ---
 
-## Funcionalidades (em andamento)
+## Features (Work in Progress)
 
--  **Dashboard de Perfil**
-  - Resumo de seguidores, engajamento médio (ER), visualizações e número de campanhas.
-  - Comparação entre posts **orgânicos** e de **campanha**.
-  - Gráfico de crescimento de seguidores com identificação de picos.
+- **Profile Dashboard**
+  - Followers, average engagement rate (ER), views, and campaigns summary.
+  - Compare **organic posts** vs. **sponsored campaigns**.
+  - Followers growth chart with peak detection.
 
--  **Comparação de Perfis**
-  - Compare até dois perfis semelhantes em métricas de:
-    - Seguidores
-    - Engajamento (ER)
-    - Visualizações médias
-    - Campanhas ativas
+- **Profile Comparison**
+  - Compare up to two similar profiles in terms of:
+    - Followers
+    - Engagement rate (ER)
+    - Average views
+    - Campaigns
 
--  **Campanhas**
-  - Registro e visualização de campanhas executadas.
-  - Análise de performance (likes, comentários, shares, ER).
+- **Campaigns**
+  - Register and track executed campaigns.
+  - Performance analytics (likes, comments, shares, ER).
 
--  **Audiência**
-  - Segmentação de seguidores (gênero, idade, localização).
-  - Métricas de qualidade da audiência.
+- **Audience**
+  - Audience segmentation (gender, age, location).
+  - Audience quality metrics.
 
--  **Relatórios**
-  - Geração de relatórios comparativos entre **conteúdo orgânico** e **patrocinado**.
-  - Import de CSV/JSON e exportação para PDF (em progresso).
+- **Reports**
+  - Generate reports comparing **organic content** vs. **sponsored content**.
+  - Import from CSV/JSON and export to PDF (in progress).
 
 ---
 
-##  Tecnologias Utilizadas
+## Tech Stack
 
 - React 18 + Vite
 - TypeScript
@@ -52,70 +52,70 @@
 
 ---
 
-##  Como rodar localmente
+## Getting Started
 
 ```bash
-git clone https://github.com/SEU-USUARIO/SocialMind.git
+git clone https://github.com/YOUR-USERNAME/SocialMind.git
 cd SocialMind
 npm install
 npm run dev
-# abre http://localhost:5173
+# open http://localhost:5173
 ```
 
 ---
 
-##  Scripts
+## Available Scripts
 
-- `npm run dev` — desenvolvimento
-- `npm run build` — build produção
-- `npm run preview` — preview do build
-- `npm run lint` — checagem ESLint
-- `npm run lint:fix` — correções automáticas
-- `npm run format` — Prettier
-- `npm run test` — testes unitários (Vitest)
+- `npm run dev` → start development server
+- `npm run build` → build for production
+- `npm run preview` → preview the production build
+- `npm run lint` → run ESLint
+- `npm run lint:fix` → fix lint issues
+- `npm run format` → format with Prettier
+- `npm run test` → run unit tests (Vitest)
 
 ---
 
-##  Estrutura
+## Project Structure
 
 ```
 src/
- ├─ components/          # UI compartilhada
- ├─ features/            # Módulos (Profile, Audience, Campaigns, Benchmark, Reports)
- ├─ fixtures/            # Dados mockados
- ├─ lib/                 # Regras de negócio (analytics)
- ├─ types/               # Tipos de domínio
- ├─ utils/               # Helpers (CSV, constantes)
- ├─ pages/               # Páginas (Dashboard)
- └─ app/                 # App root
+ ├─ components/        # Shared UI components (Card, Button, etc.)
+ ├─ features/          # Main features (Profile, Audience, Campaigns, Benchmark, Reports)
+ ├─ fixtures/          # Mocked data
+ ├─ lib/               # Business logic (analytics)
+ ├─ types/             # Domain types
+ ├─ utils/             # Helpers (CSV, constants)
+ ├─ pages/             # Application pages
+ └─ app/               # App root
 ```
 
 ---
 
-##  Roadmap
+## Roadmap
 
-- [x] Protótipo com abas
-- [x] Comparador de perfis
-- [x] Relatórios Orgânico x Campanha
-- [ ] Exportações CSV/PDF aprimoradas
-- [ ] Integração com APIs reais
-- [ ] Dashboard customizável
-- [ ] Autenticação / espaços de trabalho
-
----
-
-##  Contribuindo
-
-1. Faça fork
-2. Crie sua branch: `git checkout -b feat/minha-feature`
-3. Commit: `git commit -m "feat: descrição"`
-4. Push: `git push origin feat/minha-feature`
-5. Abra um PR
-
-> Dica: PRs devem passar na pipeline (lint + test).
+- [x] Initial prototype with tabs
+- [x] Profile comparison
+- [x] Basic reporting
+- [ ] Enhanced CSV/PDF exports
+- [ ] Integration with real social media APIs
+- [ ] Customizable dashboards
+- [ ] Authentication & multi-user support
 
 ---
 
-##  Licença
+## Contributing
+
+1. Fork the project  
+2. Create your feature branch: `git checkout -b feat/my-feature`  
+3. Commit your changes: `git commit -m "feat: add my feature"`  
+4. Push to the branch: `git push origin feat/my-feature`  
+5. Open a Pull Request  
+
+> PRs must pass CI checks (lint + test).
+
+---
+
+## License
 
 MIT © MVP
