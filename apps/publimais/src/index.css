@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Brazilian Creator Economy Brand Colors - High Contrast */
+    --background: 0 0% 100%;        /* Pure white for maximum contrast */
+    --foreground: 217 33% 17%;      /* Dark blue-gray #1E2A3A for readability */
+    --card: 0 0% 100%;
+    --card-foreground: 217 33% 17%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 217 33% 17%;
+    
+    /* Primary: Deep Royal Blue - high contrast */
+    --primary: 220 95% 35%;         /* Deep Royal Blue #0B2F6B */
+    --primary-light: 220 85% 55%;
+    --primary-dark: 220 95% 25%;
+    --primary-foreground: 0 0% 100%;
+    
+    /* Secondary: Rich Golden Amber */
+    --secondary: 35 100% 45%;       /* Rich Amber #E69500 */
+    --secondary-foreground: 0 0% 100%;
+    
+    /* Neutral grays with proper contrast */
+    --muted: 220 20% 96%;           /* Very light blue-gray */
+    --muted-foreground: 220 15% 35%; /* Medium dark for good contrast */
+    
+    /* Accent colors - vibrant but accessible */
+    --accent: 220 20% 96%;
+    --accent-blue: 220 95% 35%;
+    --accent-cyan: 185 100% 35%;    /* Darker cyan for contrast */
+    --accent-coral: 348 85% 55%;    /* Rich coral */
+    --accent-amber: 35 100% 45%;
+    --accent-teal: 185 100% 35%;
+    --accent-green: 140 85% 25%;    /* Dark green for contrast */
+    --accent-foreground: 217 33% 17%;
+    
+    --destructive: 0 85% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 20% 88%;          /* Light border */
+    --input: 220 20% 96%;
+    --ring: 220 95% 35%;
+    --radius: 0.75rem;
+
+    /* High contrast gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(220 95% 35%), hsl(185 100% 35%));
+    --gradient-feature: linear-gradient(135deg, hsl(35 100% 45%), hsl(348 85% 55%));
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%), hsl(220 20% 98%));
+    --gradient-accent: linear-gradient(135deg, hsl(185 100% 35%), hsl(220 95% 35%));
+
+    /* High contrast shadows */
+    --shadow-soft: 0 2px 8px rgba(11, 47, 107, 0.1);
+    --shadow-medium: 0 4px 16px rgba(11, 47, 107, 0.15);
+    --shadow-strong: 0 8px 32px rgba(11, 47, 107, 0.2);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Utility Classes */
+  .hover-lift {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-strong);
+  }
+
+  .hover-scale {
+    transition: var(--transition-smooth);
+  }
+
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
