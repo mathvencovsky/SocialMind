@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Publi+ - Cresça sua influência. Conecte-se às marcas certas.</title>
+    
+    <!-- Google Fonts - Poppins for headings, Inter for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <meta name="description" content="A primeira plataforma brasileira que une criadores, agências e marcas em um só lugar — do primeiro contato ao contrato. Comece grátis hoje." />
+    <meta name="author" content="Publi+" />
+    <meta name="keywords" content="influenciadores, marketing de influência, creators, marcas, agências, Brasil, parcerias" />
+
+    <meta property="og:title" content="Publi+ - Conectando criadores e marcas no Brasil" />
+    <meta property="og:description" content="A primeira plataforma brasileira que une criadores, agências e marcas em um só lugar — do primeiro contato ao contrato." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@publimais" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="PubliMais">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    
+    <link rel="canonical" href="https://publimais.com" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("/service-worker.js")
+            .then((registration) => {
+              console.log("SW registrado com sucesso: ", registration);
+            })
+            .catch((registrationError) => {
+              console.log("SW falhou ao registrar: ", registrationError);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
