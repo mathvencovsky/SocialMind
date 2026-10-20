@@ -19,6 +19,22 @@ O coletor só usa a biblioteca padrão do Python 3.9+. Para os testes: `pip inst
 
 `coletor/radar_youtube.py` é o script original, mantido como referência: `main.py` e o pacote `radar/` geram os mesmos arquivos com `--mock`.
 
+## Banco (Supabase)
+
+1. Crie um projeto no Supabase e rode `supabase/migrations/20261020000000_inicial.sql` no SQL Editor.
+2. Copie `.env.example` para `.env` na raiz e preencha `SUPABASE_URL` e `SUPABASE_SERVICE_ROLE_KEY` (Project Settings > API). A service role key ignora o RLS: nunca use no navegador.
+3. De dentro de `coletor/`:
+
+```bash
+python importar_csv.py produtos_exemplo.csv   # carrega ou atualiza produtos
+python main.py --mock                         # coleta simulada gravando no banco
+python main.py                                # coleta real (precisa de YOUTUBE_API_KEY)
+```
+
+Sem CSV, `main.py` lê os produtos ativos do banco (os de `ultima_coleta` mais antiga primeiro) e grava vídeos, vínculos, métricas do dia, descobertos e uma linha em `execucoes`. Tudo é upsert: rodar duas vezes no mesmo dia atualiza as linhas do dia em vez de duplicar. Com CSV, roda como antes, sem tocar no banco.
+
+`importar_csv.py` também aceita as colunas opcionais `nicho`, `url`, `url_pagina_vendas`, `descricao`, `preco`, `comissao_pct` e `comissao_valor`. Uma coluna presente mas vazia grava vazio no banco.
+
 ## Formato do CSV
 
 | coluna | obrigatória | o que colocar |

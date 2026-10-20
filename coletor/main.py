@@ -3,17 +3,23 @@
 Radar de saturação de produtos afiliados no YouTube Brasil.
 
 Uso:
-  export YOUTUBE_API_KEY=...
-  python main.py produtos.csv
+  python main.py                               # produtos ativos do Supabase, grava lá
+  python main.py --mock                        # idem, com vídeos simulados
+  python main.py produtos.csv                  # só CSV, sem banco
   python main.py produtos.csv --dias 60 --paginas 2
-  python main.py produtos_exemplo.csv --mock   # teste sem API
+  python main.py produtos_exemplo.csv --mock   # teste sem API e sem banco
+
+Chaves no .env da raiz ou no ambiente: YOUTUBE_API_KEY, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY.
 """
 
 import argparse
 import csv
 import os
 import sys
+from datetime import datetime, timezone
 
+from radar import carregar_env
+from radar.db import Banco
 from radar.links import AnalisadorLinks
 from radar.metricas import analisar
 from radar.youtube import CUSTO_SEARCH, CUSTO_VIDEOS, Cache, ClienteMock, ClienteYouTube
@@ -41,9 +47,21 @@ def gravar_csv(caminho, linhas):
         w.writerows(linhas)
 
 
+def produtos_do_banco(banco):
+    linhas = banco.produtos_ativos()
+    if not linhas:
+        sys.exit("Nenhum produto ativo no banco. Carregue produtos com: python importar_csv.py produtos_exemplo.csv")
+    return [{"id": r["id"], "nome": r["nome"], "plataforma": r["plataforma"], "id_produto": r["id_externo"],
+             "termos_busca": r["termos_busca"] or r["nome"],
+             "demanda": "" if r["demanda_bruta"] is None else str(r["demanda_bruta"])} for r in linhas]
+
+
 def main():
+    carregar_env()
     ap = argparse.ArgumentParser(description="Radar de saturação de produtos afiliados no YouTube Brasil")
-    ap.add_argument("produtos", help="CSV com nome, plataforma, id_produto, termos_busca e (opcional) demanda")
+    ap.add_argument("produtos", nargs="?",
+                    help="CSV com nome, plataforma, id_produto, termos_busca e (opcional) demanda. "
+                         "Sem CSV, lê os produtos ativos do Supabase e grava a coleta lá.")
     ap.add_argument("--dias", type=int, default=90, help="janela de vídeos publicados (padrão 90)")
     ap.add_argument("--paginas", type=int, default=1, help="páginas de 50 resultados por produto (cada uma custa 100 unidades)")
     ap.add_argument("--cota", type=int, default=9000, help="limite de unidades a gastar nesta execução")
@@ -53,7 +71,8 @@ def main():
     ap.add_argument("--mock", action="store_true", help="usa dados simulados, sem chamar a API")
     args = ap.parse_args()
 
-    produtos = carregar_produtos(args.produtos)
+    banco = None if args.produtos else Banco()
+    produtos = carregar_produtos(args.produtos) if args.produtos else produtos_do_banco(banco)
     estimativa = len(produtos) * args.paginas * (CUSTO_SEARCH + CUSTO_VIDEOS)
     print(f"{len(produtos)} produtos, custo estimado: ~{estimativa} unidades (sem contar o cache).", file=sys.stderr)
     if estimativa > args.cota:
@@ -70,11 +89,21 @@ def main():
         cliente = ClienteYouTube(chave, cache)
         links = AnalisadorLinks(cache, resolver=not args.sem_resolver)
 
+    inicio, erros, processados = datetime.now(timezone.utc), None, 0
     try:
-        resultados, descobertos = analisar(produtos, cliente, links, args.dias, args.paginas)
+        resultados, descobertos, coletados = analisar(produtos, cliente, links, args.dias, args.paginas)
+        if banco:
+            # shortcut: descobertos usa só os produtos desta execução; filtrar pelo catálogo inteiro quando a Fase 3 processar um subconjunto.
+            banco.gravar_coleta(produtos, resultados, descobertos, coletados, inicio)
+        processados = len(resultados)
+    except BaseException as e:  # inclui o sys.exit de cota esgotada
+        erros = str(e) or type(e).__name__
+        raise
     finally:
         if not args.mock:
             cache.salvar_links()
+        if banco:
+            banco.registrar_execucao(inicio, datetime.now(timezone.utc), cliente.unidades, processados, erros)
 
     gravar_csv(args.saida, resultados)
     saida_desc = os.path.splitext(args.saida)[0] + "_descobertos.csv"

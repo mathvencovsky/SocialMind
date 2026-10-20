@@ -30,6 +30,7 @@ def analisar(produtos, cliente, links, dias, paginas):
     chaves_lista = {(p["plataforma"], p["id_produto"].lower()) for p in produtos}
     descobertos = defaultdict(lambda: {"id": None, "videos": set(), "afiliados": set(), "canais": set(), "views": 0})
     resultados = []
+    coletados = []  # um item por par (vídeo, produto) casado, para gravar no banco
 
     for n, p in enumerate(produtos, 1):
         print(f"[{n}/{len(produtos)}] {p['nome']}", file=sys.stderr)
@@ -45,6 +46,7 @@ def analisar(produtos, cliente, links, dias, paginas):
             desc = sn.get("description", "")
             views = int(st.get("viewCount", 0) or 0)
             casou_forte = False
+            token_video = None
             for url in URL_RE.findall(desc):
                 info = links.analisar(url)
                 if not info or not info.get("produto"):
@@ -54,6 +56,7 @@ def analisar(produtos, cliente, links, dias, paginas):
                     casou_forte = True
                     if info.get("afiliado"):
                         afiliados.add(info["afiliado"])
+                        token_video = token_video or info["afiliado"]
                 elif chave not in chaves_lista:
                     d = descobertos[chave]
                     d["id"] = d["id"] or info["produto"]
@@ -71,6 +74,13 @@ def analisar(produtos, cliente, links, dias, paginas):
             else:
                 continue
             canais.add(sn.get("channelId"))
+            coletados.append({
+                "produto": (p["plataforma"], p["id_produto"]),
+                "video": {"id": v["id"], "canal_id": sn.get("channelId"), "titulo": sn.get("title"),
+                          "publicado_em": sn.get("publishedAt"), "views": views},
+                "tipo_match": "link" if casou_forte else "mencao",
+                "afiliado_token": token_video,
+            })
 
         todos = forte + fraco
         vpd = [r["views"] / r["dias"] for r in todos if r["dias"]]
@@ -96,7 +106,7 @@ def analisar(produtos, cliente, links, dias, paginas):
           "canais_distintos": len(d["canais"]), "afiliados_distintos": len(d["afiliados"]),
           "views_total": d["views"]} for k, d in descobertos.items()),
         key=lambda x: (-x["afiliados_distintos"], -x["views_total"]))
-    return resultados, lista_desc
+    return resultados, lista_desc, coletados
 
 
 def classificar(resultados):
