@@ -7,7 +7,7 @@ def carregar_env(caminho=ENV_RAIZ):
     """Lê CHAVE=valor do .env da raiz sem sobrescrever o que já está no ambiente
     (no GitHub Actions as chaves vêm dos Secrets e não há .env)."""
     try:
-        with open(caminho, encoding="utf-8") as f:
+        with open(caminho, encoding="utf-8-sig") as f:  # -sig: editores do Windows podem gravar BOM
             for linha in f:
                 chave, sep, valor = linha.strip().partition("=")
                 if sep and chave and not chave.startswith("#"):
